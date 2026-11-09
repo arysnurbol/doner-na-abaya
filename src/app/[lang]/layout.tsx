@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Onest, Unbounded } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import { htmlLang, isLang, langs, site } from "@/config/site";
 import { kz } from "@/i18n/kz";
@@ -9,17 +9,11 @@ import { Analytics } from "@/components/analytics";
 import { JsonLd } from "@/components/json-ld";
 import "../globals.css";
 
-const unbounded = Unbounded({
+// cyrillic-ext содержит казахские буквы (Ә, Ғ, Қ, Ң, Ө, Ұ, Ү, Һ)
+const montserrat = Montserrat({
   subsets: ["cyrillic", "cyrillic-ext", "latin"],
-  weight: ["800"],
-  variable: "--font-unbounded",
-  display: "swap",
-});
-
-const onest = Onest({
-  subsets: ["cyrillic", "cyrillic-ext", "latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-onest",
+  weight: ["400", "500", "700", "800"],
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -76,7 +70,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!isLang(lang)) notFound();
 
   return (
-    <html lang={htmlLang[lang]} className={`${unbounded.variable} ${onest.variable}`}>
+    <html lang={htmlLang[lang]} className={montserrat.variable}>
       <body>
         <JsonLd lang={lang} />
         <StoreProvider lang={lang}>{children}</StoreProvider>

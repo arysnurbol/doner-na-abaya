@@ -12,8 +12,8 @@
   --color-muted: #6b6159;
   --color-line: #ddd9d4;
 
-  --font-display: var(--font-unbounded), "Arial Black", sans-serif;
-  --font-sans: var(--font-onest), system-ui, sans-serif;
+  --font-display: var(--font-montserrat), "Arial Black", sans-serif;
+  --font-sans: var(--font-montserrat), system-ui, sans-serif;
 
   --ease-snap: cubic-bezier(0.2, 0.9, 0.2, 1.15);
 }
