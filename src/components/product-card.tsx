@@ -54,7 +54,7 @@ export function AddControls({ product, size = "md" }: { product: Product; size?:
             add(product.id, variant.id);
             setJustAdded(true);
           }}
-          className={`inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full px-4 @max-[15rem]:w-full font-bold transition-[background-color,transform] active:scale-95 ${
+          className={`inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full px-4 whitespace-nowrap @max-[15rem]:w-full @max-[8rem]:px-2 @max-[8rem]:text-sm @max-[8rem]:[&>svg]:hidden font-bold transition-[background-color,transform] active:scale-95 ${
             justAdded ? "bg-emerald-600 text-white" : "bg-char text-white hover:bg-sauce"
           }`}
         >

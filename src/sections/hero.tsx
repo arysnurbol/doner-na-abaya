@@ -35,7 +35,7 @@ export function Hero({ t, lang }: { t: Dict; lang: Lang }) {
             </a>
           </div>
           <div className="hero-rise mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 [animation-delay:.3s]">
-            <a href={site.links.twoGisReviews} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-medium text-char hover:underline">
+            <a href={site.links.twoGisReviews} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 font-medium text-char hover:underline">
               <span className="inline-flex items-center gap-1 rounded-full bg-char px-2.5 py-1 font-bold text-saffron">
                 <Star className="size-4 fill-saffron" strokeWidth={0} />
                 {site.rating.value.toString().replace(".", ",")}

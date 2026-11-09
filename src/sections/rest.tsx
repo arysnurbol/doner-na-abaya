@@ -291,7 +291,7 @@ export function FinalCta({ t }: { t: Dict }) {
 export function Footer({ t, lang }: { t: Dict; lang: Lang }) {
   const year = 2026;
   return (
-    <footer className="bg-char pt-14 pb-28 text-white/75 sm:pb-12">
+    <footer className="bg-char pt-14 pb-28 text-white/75 lg:pb-12">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[1.4fr_1fr_1.2fr]">
         <div>
           <Logo tone="light" />

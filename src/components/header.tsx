@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { formatPrice } from "@/lib/format";
+import { OrderButton } from "./cart-ui";
 import { Logo } from "./icons";
 import { OpenStatus } from "./open-status";
 import { useStore } from "./store";
 
 export function Header() {
-  const { t, lang, count, openCart } = useStore();
+  const { t, lang, count, total, openCart } = useStore();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [bumpKey, setBumpKey] = useState(0);
@@ -50,7 +52,7 @@ export function Header() {
       </a>
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 sm:px-6">
         <Link href={`/${lang}`} aria-label="Донер на Абая" className="shrink-0">
-          <Logo />
+          <Logo className="max-[359px]:[&>span:last-child]:hidden" />
         </Link>
 
         <nav aria-label={t.nav.menu} className="ml-6 hidden items-center gap-1 lg:flex">
@@ -79,12 +81,16 @@ export function Header() {
               </span>
             )}
           </button>
-          <a
-            href="#menu"
-            className="hidden h-11 items-center rounded-full bg-char px-5 font-bold text-white transition-colors hover:bg-char-soft sm:inline-flex"
-          >
-            {t.nav.order}
-          </a>
+          <OrderButton className="tnum hidden h-11 items-center gap-2 rounded-full bg-char px-5 font-bold whitespace-nowrap text-white transition-colors hover:bg-sauce sm:inline-flex">
+            {count > 0 ? (
+              <>
+                {t.mobileBar.checkout}
+                <span className="text-saffron">{formatPrice(total)}</span>
+              </>
+            ) : (
+              t.nav.order
+            )}
+          </OrderButton>
           <button
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
@@ -129,7 +135,7 @@ function LangSwitch() {
           href={`/${l}`}
           hrefLang={l === "ru" ? "ru" : "kk"}
           aria-current={l === lang ? "page" : undefined}
-          className={`grid h-9 min-w-10 place-items-center rounded-full px-2 uppercase transition-colors ${
+          className={`grid h-10 min-w-11 place-items-center rounded-full px-2 uppercase transition-colors ${
             l === lang ? "bg-white text-char shadow-sm" : "text-char/85 hover:text-char"
           }`}
         >

@@ -26,7 +26,7 @@ export function CartToast() {
     <div
       key={toast.id}
       role="status"
-      className="toast-in fixed inset-x-3 bottom-22 z-40 mx-auto max-w-md rounded-3xl bg-char p-3 pl-4 text-white shadow-2xl sm:bottom-6"
+      className="toast-in fixed inset-x-3 bottom-22 z-40 mx-auto max-w-md rounded-3xl bg-char p-3 pl-4 text-white shadow-2xl lg:bottom-6"
     >
       <div className="flex items-center gap-2">
         <p className="flex-1 text-sm">
@@ -60,29 +60,38 @@ export function CartToast() {
   );
 }
 
-/** Нижняя панель на телефоне: появляется после hero. */
+/** Нижняя панель на телефоне и планшете: появляется после hero. */
 export function MobileBar() {
   const { t, count, total, openCart } = useStore();
   const [visible, setVisible] = useState(false);
+  const [inMenu, setInMenu] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.6);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    // Внутри меню кнопка «Смотреть меню» не нужна и закрывает карточки
+    const menu = document.getElementById("menu");
+    const io = menu ? new IntersectionObserver(([e]) => setInMenu(e.isIntersecting)) : null;
+    if (menu) io?.observe(menu);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      io?.disconnect();
+    };
   }, []);
 
-  const show = visible || count > 0;
+  const show = count > 0 || (visible && !inMenu);
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-30 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-transform duration-300 sm:hidden ${
-        show ? "translate-y-0" : "translate-y-full"
+      className={`fixed inset-x-0 bottom-0 z-30 mx-auto max-w-lg p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-transform duration-300 lg:hidden ${
+        show ? "translate-y-0" : "translate-y-[calc(100%+1rem)]"
       }`}
+      inert={!show}
     >
       {count > 0 ? (
         <button onClick={openCart} className="flex min-h-14 w-full items-center gap-3 rounded-full bg-char pr-2 pl-5 text-white shadow-2xl">
           <ShoppingBag className="size-5 text-saffron" />
-          <span className="tnum text-sm text-white/80">{t.cart.items(count)}</span>
+          <span className="tnum text-sm text-white/80 max-[359px]:hidden">{t.cart.items(count)}</span>
           <span className="tnum ml-auto font-display font-extrabold">{formatPrice(total)}</span>
           <span className="rounded-full bg-saffron px-4 py-2.5 text-sm font-bold text-char">{t.mobileBar.checkout}</span>
         </button>

@@ -123,8 +123,8 @@ export function CartDrawer() {
         aria-modal="true"
         aria-labelledby="cart-title"
         tabIndex={-1}
-        className={`absolute inset-y-0 right-0 flex w-full max-w-[440px] flex-col bg-white shadow-2xl outline-none transition-transform duration-300 ease-out ${
-          cartOpen ? "translate-x-0" : "translate-x-full"
+        className={`absolute inset-y-0 right-0 flex w-full max-w-[440px] flex-col bg-white outline-none transition-[translate,box-shadow] duration-300 ease-out ${
+          cartOpen ? "translate-x-0 shadow-2xl" : "translate-x-full"
         }`}
       >
         <div className="flex items-center gap-2 border-b border-line px-4 py-3">
@@ -209,7 +209,14 @@ export function CartDrawer() {
                             <Plus className="size-4" strokeWidth={2.5} />
                           </button>
                         </div>
-                        <span className="tnum font-bold">{formatPrice(l.sum)}</span>
+                        <span className="tnum text-right leading-tight">
+                          <span className="block font-bold">{formatPrice(l.sum)}</span>
+                          {l.qty > 1 && (
+                            <span className="block text-xs text-muted">
+                              {l.qty} × {formatPrice(l.variant.price)}
+                            </span>
+                          )}
+                        </span>
                       </div>
                     </div>
                   </li>
